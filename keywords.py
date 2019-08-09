@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import requests
@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
-# In[3]:
+# In[9]:
 
 
 base = declarative_base()
@@ -33,7 +33,7 @@ class NaverKeywords(base):
         return "<NaverKeywords {}, {}>".format(self.rank, self.keyword)  
 
 
-# In[4]:
+# In[3]:
 
 
 # 클래스 작성
@@ -41,12 +41,12 @@ class NaverKeywords(base):
 # __init__, crawling, mysql_save, mongo_save, send_slack, run
 
 
-# In[5]:
+# In[18]:
 
 
 class NaverKeywordsCrawling:
 
-    def __init__(self, base, ip="52.78.189.210", pw="dssf", database="terraform"):
+    def __init__(self, base, ip="52.78.124.238", pw="dssf", database="terraform"):
         self.mysql_client = create_engine("mysql://root:{}@{}/{}?charset=utf8".format(pw, ip, database))
         self.mongo_client = pymongo.MongoClient('mongodb://{}:27017'.format(ip))
         self.datas = None
@@ -90,8 +90,8 @@ class NaverKeywordsCrawling:
         # insert keyowrds
         self.mongo_client.terraform.naver_keywords.insert(keyowrds)
         
-    def send_slack(self, msg, channel="#dssf", username="provision_bot" ):
-        webhook_URL = "https://hooks.slack.com/services/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"
+    def send_slack(self, msg, channel="#dss", username="provision_bot" ):
+        webhook_URL = "https://hooks.slack.com/services/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"
         payload = {
             "channel": channel,
             "username": username,
@@ -121,6 +121,7 @@ class NaverKeywordsCrawling:
 
 
 nk = NaverKeywordsCrawling(base)
+nk
 
 
 # In[20]:
